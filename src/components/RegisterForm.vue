@@ -1,7 +1,7 @@
 <template>
   <div
     class="text-white text-center font-bold p-4 rounded mb-4"
-    v-if="reg_show_alert"
+    v-if="reg_alert"
     :class="reg_alert_variant"
   >
     {{ reg_alert_msg }}
@@ -105,6 +105,9 @@
 </template>
 
 <script>
+import { mapActions } from "pinia";
+import useUserStore from "@/stores/user";
+
 export default {
   name: "RegisterForm",
   data() {
@@ -128,14 +131,27 @@ export default {
     };
   },
   methods: {
-    register(values) {
+    ...mapActions(useUserStore, {
+      createUser: "register",
+    }),
+    async register(values) {
       this.reg_alert = true;
       this.reg_in_submission = true;
       this.reg_alert_variant = "bg-blue-500";
       this.reg_alert_msg = "Your account is being created...";
 
+      try {
+        await this.createUser(values);
+      } catch (error) {
+        this.reg_in_submission = false;
+        this.reg_alert_variant = "bg-red-500";
+        this.reg_alert_msg = "An unexpected error occurred, please try again.";
+        return;
+      }
+
       this.reg_alert_variant = "bg-green-500";
       this.reg_alert_msg = "Your account has been created!";
+      window.location.reload();
     },
   },
 };
