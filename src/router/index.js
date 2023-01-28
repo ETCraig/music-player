@@ -25,9 +25,9 @@ const routes = [
       console.log("Manage Route Guard");
       next();
     },
-    meta: {
-      requiresAuth: true,
-    },
+    // meta: {
+    //   requiresAuth: true,
+    // },
   },
   {
     path: "/manage",
