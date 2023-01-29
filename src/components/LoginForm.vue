@@ -7,7 +7,6 @@
     {{ login_alert_msg }}
   </div>
   <vee-form :validation-schema="loginSchema" @submit="login">
-    <!-- Email -->
     <div class="mb-3">
       <label class="inline-block mb-2">Email</label>
       <vee-field
@@ -18,7 +17,6 @@
       />
       <ErrorMessage class="text-red-600" name="email" />
     </div>
-    <!-- Password -->
     <div class="mb-3">
       <label class="inline-block mb-2">Password</label>
       <vee-field
